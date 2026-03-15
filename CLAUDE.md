@@ -101,14 +101,26 @@ Optional (Heston notebook): `py_vollib_vectorized`, `plotly`
 
 ## Progress Log
 
-### 2026-03-15
-- Created `unified` branch from `main`
-- Brought in all 4 explore notebooks (`git checkout explore -- ...`)
-- Renamed all 6 notebooks to standardized `01_`–`06_` convention
-- Created `CLAUDE.md`
-- Standardized `01_black_scholes.ipynb`: consolidated imports, canonical NSE fetch, removed trailing empty cells
-- Standardized `02_black_scholes_merton.ipynb`: removed Colab badge, canonical NSE fetch, added synthetic section, removed empty trailing cell
-- Standardized `03_monte_carlo_simulation.ipynb`: consolidated imports, deduplicated NSE fetch, added synthetic section header
-- Standardized `04_heston_model.ipynb`: wrapped BANKNIFTY cells as optional, removed commented-out code, fixed hardcoded annual_volatility
-- Standardized `05_bates_model.ipynb`: canonical NSE fetch, fixed hardcoded annual_volatility
-- Migrated `06_merton_jump_diffusion.ipynb`: replaced S&P500 CSV calibration with NSE NIFTY, added MertonJumpDiffusion class, standardized imports and params
+### 2026-03-15 — Initial Unification Complete
+**Branch:** `unified` (created from `main`, explore notebooks cherry-picked in)
+
+| Commit | Change |
+|--------|--------|
+| `618b7a2` | Brought all 6 notebooks into unified branch |
+| `462c737` | Renamed all notebooks to `01_`–`06_` convention |
+| `ba5da88` | Created `CLAUDE.md` |
+| `c7e618d` | 01_black_scholes: consolidated imports, canonical NSE fetch, synthetic test, removed empty cells |
+| `7e66cf8` | 02_black_scholes_merton: removed Colab badge, canonical NSE fetch, synthetic test |
+| `4334e48` | 03_monte_carlo_simulation: consolidated imports, deduplicated NSE fetch, antithetic reuses fetched df |
+| `d6fc511` | 04_heston_model: yfinance volatility, removed commented blocks, BANKNIFTY as optional section |
+| `eaaa090` | 05_bates_model: canonical NSE fetch (adds max_retries), yfinance volatility |
+| `78ddbe5` | 06_merton_jump_diffusion: replaced S&P500 CSV with NSE NIFTY calibration, standardized imports/params |
+| `cfac3b7` | Final pass: TARGET_EXPIRY in heston, clarified synthetic r=0.02 |
+
+**All 6 notebooks now:**
+- Use canonical `fetch_nse_data()` with `max_retries=3`
+- Compute `annual_volatility` dynamically via yfinance (no hardcoded 14.32)
+- Use `TARGET_EXPIRY` variable (update before running)
+- Have consolidated imports in top code cell
+- Have no Colab badges or S&P500/external CSV dependencies
+- Have synthetic parameter tests using `_test` suffix convention
